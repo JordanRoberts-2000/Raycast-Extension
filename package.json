@@ -12,7 +12,7 @@
       "name": "svg-library",
       "title": "svg-library",
       "description": "",
-      "mode": "no-view"
+      "mode": "view"
     }
   ],
   "dependencies": {

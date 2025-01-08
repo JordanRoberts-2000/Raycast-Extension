@@ -1,8 +1,8 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
-  "name": "git-comment-prefixes",
-  "title": "git-comment-prefixes",
-  "description": "",
+  "name": "github-commit-prefixes",
+  "title": "GitHub Commit Prefixes",
+  "description": "A handy tool for exploring and understanding GitHub commit prefixes based on the Conventional Commits specification. Perfect for developers looking to streamline their commit messages.",
   "icon": "extension-icon.svg",
   "author": "jordan_roberts",
   "owner": "strawr",
@@ -10,8 +10,8 @@
   "commands": [
     {
       "name": "index",
-      "title": "git-comment-prefixes",
-      "description": "",
+      "title": "Show Prefixes",
+      "description": "Browse commonly used commit prefixes and their meanings based on Conventional Commits.",
       "mode": "view"
     }
   ],

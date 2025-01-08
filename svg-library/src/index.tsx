@@ -16,35 +16,31 @@ export default function Command() {
   }, []);
   // todo: add keywords array for search bar?
   return (
-    <List>
-      <List.Item title={"React"} />
-      <List.Item title={"Astro"} />
-    </List>
-    // <Grid
-    //   columns={8}
-    //   inset={Grid.Inset.Large}
-    //   actions={
-    //     <ActionPanel>
-    //       <Action.Push title="Add New SVG" target={<AddSvgForm />} />
-    //     </ActionPanel>
-    //   }
-    // >
-    //   {Object.entries(svgLibrary).map(([name, content]) => (
-    //     <Grid.Item
-    //       key={name}
-    //       title={name}
-    //       actions={
-    //         <ActionPanel>
-    //           <Action.Paste title="Paste SVG Code" content={content} />
-    //           <Action.CopyToClipboard title="Copy SVG Code" content={content} />
-    //           <Action title="Delete SVG" onAction={() => handleDelete(name)} />
-    //           <Action.Push title="Add New SVG" target={<AddSvgForm />} />
-    //           <Action.Push title="Edit SVG" target={<EditSvgForm name={name} content={content} />} />
-    //         </ActionPanel>
-    //       }
-    //       content={{ source: `data:image/svg+xml;base64,${btoa(content)}` }}
-    //     />
-    //   ))}
-    // </Grid>
+    <Grid
+      columns={8}
+      inset={Grid.Inset.Large}
+      actions={
+        <ActionPanel>
+          <Action.Push title="Add New SVG" target={<AddSvgForm />} />
+        </ActionPanel>
+      }
+    >
+      {Object.entries(svgLibrary).map(([name, content]) => (
+        <Grid.Item
+          key={name}
+          title={name}
+          actions={
+            <ActionPanel>
+              <Action.Paste title="Paste SVG Code" content={content} />
+              <Action.CopyToClipboard title="Copy SVG Code" content={content} />
+              <Action title="Delete SVG" onAction={() => handleDelete(name)} />
+              <Action.Push title="Add New SVG" target={<AddSvgForm />} />
+              <Action.Push title="Edit SVG" target={<EditSvgForm name={name} content={content} />} />
+            </ActionPanel>
+          }
+          content={{ source: `data:image/svg+xml;base64,${btoa(content)}` }}
+        />
+      ))}
+    </Grid>
   );
 }

@@ -3,7 +3,7 @@
   "name": "git-comment-prefixes",
   "title": "git-comment-prefixes",
   "description": "",
-  "icon": "extension-icon.png",
+  "icon": "extension-icon.svg",
   "author": "jordan_roberts",
   "owner": "strawr",
   "license": "MIT",

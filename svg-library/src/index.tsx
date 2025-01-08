@@ -9,6 +9,7 @@ import SortByDropdown from "./SortByDropdown";
 export default function Command() {
   const [svgLibrary, setSVGLibrary] = useState<IconLibrary>({});
   const [sortBy, setSortBy] = useState<SortBy>("usage");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchSVGs = async () => {
@@ -19,10 +20,12 @@ export default function Command() {
       if (library.iconLibrary) {
         setSVGLibrary(library.iconLibrary);
       }
+      setIsLoading(false);
     };
     fetchSVGs();
   }, []);
 
+  if (isLoading) return <List isLoading={true} />;
   return (
     <Grid
       searchBarAccessory={<SortByDropdown setSortBy={setSortBy} sortBy={sortBy} />}
@@ -34,8 +37,9 @@ export default function Command() {
         </ActionPanel>
       }
     >
-      <Grid.Item title="egg" content={{ color: "blue" }} />
-      {/* {Object.entries(svgLibrary).map(([name, value]) => {
+      {/* remove empty flash */}
+      <Grid.EmptyView icon={"."} />
+      {Object.entries(svgLibrary).map(([name, value]) => {
         const { content, keywords } = JSON.parse(value);
         return (
           <Grid.Item
@@ -54,7 +58,7 @@ export default function Command() {
             content={{ source: `data:image/svg+xml;base64,${btoa(content)}` }}
           />
         );
-      })} */}
+      })}
     </Grid>
   );
 }

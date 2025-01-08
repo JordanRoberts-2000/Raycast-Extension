@@ -3,21 +3,29 @@ import { handleDelete } from "./utils";
 import AddSvgForm from "./AddSvgForm";
 import EditSvgForm from "./EditSvgForm";
 import { useEffect, useState } from "react";
+import type { Storage, SortBy, IconLibrary } from "./types";
+import SortByDropdown from "./SortByDropdown";
 
 export default function Command() {
-  const [svgLibrary, setSVGLibrary] = useState({});
+  const [svgLibrary, setSVGLibrary] = useState<IconLibrary>({});
+  const [sortBy, setSortBy] = useState<SortBy>("usage");
 
   useEffect(() => {
     const fetchSVGs = async () => {
-      const library = await LocalStorage.allItems();
-      console.log(library);
-      setSVGLibrary(library);
+      const library = await LocalStorage.allItems<Storage>();
+      if (library.sortBy) {
+        setSortBy(library.sortBy);
+      }
+      if (library.iconLibrary) {
+        setSVGLibrary(library.iconLibrary);
+      }
     };
     fetchSVGs();
   }, []);
-  // todo: add keywords array for search bar?
+
   return (
     <Grid
+      searchBarAccessory={<SortByDropdown setSortBy={setSortBy} sortBy={sortBy} />}
       columns={8}
       inset={Grid.Inset.Large}
       actions={
@@ -26,7 +34,8 @@ export default function Command() {
         </ActionPanel>
       }
     >
-      {Object.entries(svgLibrary).map(([name, value]) => {
+      <Grid.Item title="egg" content={{ color: "blue" }} />
+      {/* {Object.entries(svgLibrary).map(([name, value]) => {
         const { content, keywords } = JSON.parse(value);
         return (
           <Grid.Item
@@ -45,7 +54,7 @@ export default function Command() {
             content={{ source: `data:image/svg+xml;base64,${btoa(content)}` }}
           />
         );
-      })}
+      })} */}
     </Grid>
   );
 }

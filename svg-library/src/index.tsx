@@ -10,6 +10,7 @@ export default function Command() {
   useEffect(() => {
     const fetchSVGs = async () => {
       const library = await LocalStorage.allItems();
+      console.log(library);
       setSVGLibrary(library);
     };
     fetchSVGs();
@@ -25,22 +26,26 @@ export default function Command() {
         </ActionPanel>
       }
     >
-      {Object.entries(svgLibrary).map(([name, content]) => (
-        <Grid.Item
-          key={name}
-          title={name}
-          actions={
-            <ActionPanel>
-              <Action.Paste title="Paste SVG Code" content={content} />
-              <Action.CopyToClipboard title="Copy SVG Code" content={content} />
-              <Action title="Delete SVG" onAction={() => handleDelete(name)} />
-              <Action.Push title="Add New SVG" target={<AddSvgForm />} />
-              <Action.Push title="Edit SVG" target={<EditSvgForm name={name} content={content} />} />
-            </ActionPanel>
-          }
-          content={{ source: `data:image/svg+xml;base64,${btoa(content)}` }}
-        />
-      ))}
+      {Object.entries(svgLibrary).map(([name, value]) => {
+        const { content, keywords } = JSON.parse(value);
+        return (
+          <Grid.Item
+            key={name}
+            title={name}
+            keywords={keywords}
+            actions={
+              <ActionPanel>
+                <Action.Paste title="Paste SVG Code" content={content} />
+                <Action.CopyToClipboard title="Copy SVG Code" content={content} />
+                <Action title="Delete SVG" onAction={() => handleDelete(name)} />
+                <Action.Push title="Add New SVG" target={<AddSvgForm />} />
+                <Action.Push title="Edit SVG" target={<EditSvgForm name={name} content={content} />} />
+              </ActionPanel>
+            }
+            content={{ source: `data:image/svg+xml;base64,${btoa(content)}` }}
+          />
+        );
+      })}
     </Grid>
   );
 }

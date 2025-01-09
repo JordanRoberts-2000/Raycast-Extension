@@ -1,13 +1,6 @@
-import { LocalStorage } from "@raycast/api";
+import { Alert, confirmAlert, LocalStorage, showToast, Toast } from "@raycast/api";
+import { IconLibrary } from "./types";
 
 export const saveSVG = async (name: string, content: string) => {
   await LocalStorage.setItem(name, content);
-};
-
-export const getSVGs = async () => {
-  return (await LocalStorage.getItem("svgLibrary")) || {};
-};
-
-export const handleDelete = async (title: string) => {
-  await LocalStorage.removeItem(title);
 };

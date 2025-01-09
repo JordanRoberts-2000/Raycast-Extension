@@ -1,5 +1,5 @@
 import { Form, ActionPanel, Action, Toast, showToast, LocalStorage } from "@raycast/api";
-import { IconContent } from "./types";
+import type { IconContent } from "../types";
 
 export default function AddSvgForm() {
   const handleSubmit = async (values: { name: string; content: string; keywords: string }) => {
@@ -9,12 +9,20 @@ export default function AddSvgForm() {
     }
 
     const iconContent: IconContent = {
-      content: values.content,
-      keywords: values.keywords.split(",").map((keyword) => keyword.trim()) ?? [],
+      content: values.content.trim(),
+      keywords: values.keywords
+        .split(",")
+        .map((keyword) => keyword.trim())
+        .filter(Boolean), // Remove empty keywords
     };
 
-    await LocalStorage.setItem(values.name, JSON.stringify(iconContent));
-    console.log("Saved successfully");
+    // Save the data to LocalStorage
+    const currentLibrary = await LocalStorage.getItem<string>("iconLibrary");
+    const updatedLibrary = currentLibrary
+      ? { ...JSON.parse(currentLibrary), [values.name.trim()]: iconContent }
+      : { [values.name.trim()]: iconContent };
+
+    await LocalStorage.setItem("iconLibrary", JSON.stringify(updatedLibrary));
   };
   return (
     <Form

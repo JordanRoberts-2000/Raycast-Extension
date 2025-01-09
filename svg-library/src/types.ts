@@ -1,13 +1,13 @@
 export type Storage = {
   sortBy?: SortBy;
-  iconLibrary?: IconLibrary;
+  iconLibrary?: string;
 };
 
 export type SortBy = "date" | "alphabetical" | "usage";
 
 export type IconLibrary = Record<string, IconContent>;
 
-type IconContent = {
+export type IconContent = {
   content: string;
   keywords: string[];
 };

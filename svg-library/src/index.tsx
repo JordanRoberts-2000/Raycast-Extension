@@ -1,10 +1,9 @@
 import { Grid, ActionPanel, Action, LocalStorage, List } from "@raycast/api";
-import { handleDelete } from "./utils";
-import AddSvgForm from "./AddSvgForm";
-import EditSvgForm from "./EditSvgForm";
+import AddSvgForm from "./components/AddSvgForm";
 import { useEffect, useState } from "react";
 import type { Storage, SortBy, IconLibrary } from "./types";
-import SortByDropdown from "./SortByDropdown";
+import SortByDropdown from "./components/SortByDropdown";
+import IconItemActions from "./components/IconItemActions";
 
 export default function Command() {
   const [svgLibrary, setSVGLibrary] = useState<IconLibrary>({});
@@ -14,11 +13,17 @@ export default function Command() {
   useEffect(() => {
     const fetchSVGs = async () => {
       const library = await LocalStorage.allItems<Storage>();
+
       if (library.sortBy) {
         setSortBy(library.sortBy);
       }
       if (library.iconLibrary) {
-        setSVGLibrary(library.iconLibrary);
+        try {
+          const iconLibrary: IconLibrary = JSON.parse(library.iconLibrary);
+          setSVGLibrary(iconLibrary);
+        } catch (err) {
+          console.error(`Failed to parse Icon-Library into JSON ${err}`);
+        }
       }
       setIsLoading(false);
     };
@@ -37,28 +42,16 @@ export default function Command() {
         </ActionPanel>
       }
     >
-      {/* remove empty flash */}
       <Grid.EmptyView icon={"."} />
-      {Object.entries(svgLibrary).map(([name, value]) => {
-        const { content, keywords } = JSON.parse(value);
-        return (
-          <Grid.Item
-            key={name}
-            title={name}
-            keywords={keywords}
-            actions={
-              <ActionPanel>
-                <Action.Paste title="Paste SVG Code" content={content} />
-                <Action.CopyToClipboard title="Copy SVG Code" content={content} />
-                <Action title="Delete SVG" onAction={() => handleDelete(name)} />
-                <Action.Push title="Add New SVG" target={<AddSvgForm />} />
-                <Action.Push title="Edit SVG" target={<EditSvgForm name={name} content={content} />} />
-              </ActionPanel>
-            }
-            content={{ source: `data:image/svg+xml;base64,${btoa(content)}` }}
-          />
-        );
-      })}
+      {Object.entries(svgLibrary).map(([name, { content, keywords }]) => (
+        <Grid.Item
+          key={name}
+          title={name}
+          keywords={keywords}
+          actions={<IconItemActions name={name} content={content} keywords={keywords} svgLibrary={svgLibrary} />}
+          content={{ source: `data:image/svg+xml;base64,${btoa(content)}` }}
+        />
+      ))}
     </Grid>
   );
 }

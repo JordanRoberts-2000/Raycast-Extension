@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { Storage, SortBy, IconLibrary } from "./types";
 import SortByDropdown from "./components/SortByDropdown";
 import IconItemActions from "./components/IconItemActions";
+import { addSvgHotkey } from "./constants";
 
 export default function Command() {
   const [svgLibrary, setSvgLibrary] = useState<IconLibrary>({});
@@ -38,7 +39,11 @@ export default function Command() {
       inset={Grid.Inset.Large}
       actions={
         <ActionPanel>
-          <Action.Push title="Add New SVG" target={<AddSvgForm library={svgLibrary} setLibrary={setSvgLibrary} />} />
+          <Action.Push
+            shortcut={addSvgHotkey}
+            title="Add New SVG"
+            target={<AddSvgForm library={svgLibrary} setLibrary={setSvgLibrary} />}
+          />
         </ActionPanel>
       }
     >

@@ -7,7 +7,6 @@ export default async function deleteSvg(
   library: IconLibrary,
   setLibrary: Dispatch<SetStateAction<IconLibrary>>,
 ) {
-  // todo: add hotkey
   const confirmed = await confirmAlert({
     title: "Are you sure?",
     message: `This will permanently delete "${name}".`,

@@ -2,7 +2,7 @@ import parse from "html-react-parser";
 import ReactDOMServer from "react-dom/server";
 import type { IconContent, IconLibrary, SvgFormValues } from "../types";
 import isJsxSvg from "./isJsxSvg";
-import { LocalStorage } from "@raycast/api";
+import { LocalStorage, showToast, Toast } from "@raycast/api";
 import svgFormSchema from "./svgFormSchema";
 import { Dispatch, SetStateAction } from "react";
 
@@ -10,20 +10,20 @@ export default async function addSvg(
   formValues: SvgFormValues,
   library: IconLibrary,
   setLibrary: Dispatch<SetStateAction<IconLibrary>>,
+  pop: () => void,
 ) {
   // todo: dynamic import of parse?
   const parsedValues = svgFormSchema.safeParse(formValues);
   if (!parsedValues.success) {
-    console.log("Schema Error");
-    // todo: handle error
+    const errorMessage = parsedValues.error.errors[0]?.message || "Invalid input";
+    showToast({ title: `Validation Failed`, message: errorMessage, style: Toast.Style.Failure });
     return;
   }
 
   const { name, content, keywords } = parsedValues.data;
 
   if (library[name]) {
-    console.log("Already exists");
-    // todo: handle error
+    showToast({ title: "Validation Failed", message: `'${name}' already exists`, style: Toast.Style.Failure });
     return;
   }
 
@@ -33,13 +33,18 @@ export default async function addSvg(
   };
 
   if (isJsxSvg(content)) {
-    // todo: unhandled error here?
-    const Component = () => <>{parse(content)}</>;
-    let htmlSVG = ReactDOMServer.renderToStaticMarkup(<Component />);
-    iconContent.content = htmlSVG;
+    try {
+      const Component = () => <>{parse(content)}</>;
+      let htmlSVG = ReactDOMServer.renderToStaticMarkup(<Component />);
+      iconContent.content = htmlSVG;
+    } catch (error) {
+      showToast({ title: `Detected jsx: Failed parse to html`, style: Toast.Style.Failure });
+    }
   }
 
   const updatedLibrary = { ...library, [name]: iconContent };
   await LocalStorage.setItem("iconLibrary", JSON.stringify(updatedLibrary));
   setLibrary(updatedLibrary);
+  showToast({ title: `'${name}' added`, style: Toast.Style.Success });
+  pop();
 }

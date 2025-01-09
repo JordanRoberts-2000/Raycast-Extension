@@ -1,4 +1,3 @@
-import parse from "html-react-parser";
 import ReactDOMServer from "react-dom/server";
 import type { IconContent, IconLibrary, SvgFormValues } from "../types";
 import isJsxSvg from "./isJsxSvg";
@@ -13,7 +12,6 @@ export default async function addSvg(
   pop: () => void,
 ) {
   // todo: dynamic import of parse?
-  // todo: add hotkey for adding
   const parsedValues = svgFormSchema.safeParse(formValues);
   if (!parsedValues.success) {
     const errorMessage = parsedValues.error.errors[0]?.message || "Invalid input";
@@ -35,6 +33,7 @@ export default async function addSvg(
 
   if (isJsxSvg(content)) {
     try {
+      const parse = (await import("html-react-parser")).default;
       const Component = () => <>{parse(content)}</>;
       let htmlSVG = ReactDOMServer.renderToStaticMarkup(<Component />);
       iconContent.content = htmlSVG;

@@ -16,7 +16,10 @@ export default function AddSvgForm() {
         .filter(Boolean), // Remove empty keywords
     };
 
-    // Save the data to LocalStorage
+    // todo: unique constraint
+    // todo: zod parse
+    // todo: 'added successfullt' message
+    // todo: go back to home page
     const currentLibrary = await LocalStorage.getItem<string>("iconLibrary");
     const updatedLibrary = currentLibrary
       ? { ...JSON.parse(currentLibrary), [values.name.trim()]: iconContent }

@@ -6,7 +6,7 @@ import SortByDropdown from "./components/SortByDropdown";
 import IconItemActions from "./components/IconItemActions";
 
 export default function Command() {
-  const [svgLibrary, setSVGLibrary] = useState<IconLibrary>({});
+  const [svgLibrary, setSvgLibrary] = useState<IconLibrary>({});
   const [sortBy, setSortBy] = useState<SortBy>("usage");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -20,7 +20,7 @@ export default function Command() {
       if (library.iconLibrary) {
         try {
           const iconLibrary: IconLibrary = JSON.parse(library.iconLibrary);
-          setSVGLibrary(iconLibrary);
+          setSvgLibrary(iconLibrary);
         } catch (err) {
           console.error(`Failed to parse Icon-Library into JSON ${err}`);
         }
@@ -38,7 +38,7 @@ export default function Command() {
       inset={Grid.Inset.Large}
       actions={
         <ActionPanel>
-          <Action.Push title="Add New SVG" target={<AddSvgForm />} />
+          <Action.Push title="Add New SVG" target={<AddSvgForm library={svgLibrary} setLibrary={setSvgLibrary} />} />
         </ActionPanel>
       }
     >
@@ -48,7 +48,15 @@ export default function Command() {
           key={name}
           title={name}
           keywords={keywords}
-          actions={<IconItemActions name={name} content={content} keywords={keywords} svgLibrary={svgLibrary} />}
+          actions={
+            <IconItemActions
+              name={name}
+              content={content}
+              keywords={keywords}
+              svgLibrary={svgLibrary}
+              setSvgLibrary={setSvgLibrary}
+            />
+          }
           content={{ source: `data:image/svg+xml;base64,${btoa(content)}` }}
         />
       ))}

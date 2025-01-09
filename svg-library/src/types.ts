@@ -11,3 +11,9 @@ export type IconContent = {
   content: string;
   keywords: string[];
 };
+
+export type SvgFormValues = {
+  name: string;
+  content: string;
+  keywords: string;
+};

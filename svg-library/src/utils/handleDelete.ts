@@ -1,7 +1,7 @@
 import { Alert, confirmAlert, LocalStorage, showToast, Toast } from "@raycast/api";
-import { IconLibrary } from "./types";
+import { IconLibrary } from "../types";
 
-export const handleDelete = async (name: string, library: IconLibrary) => {
+export default async function handleDelete(name: string, library: IconLibrary) {
   const confirmed = await confirmAlert({
     title: "Are you sure?",
     message: `This will permanently delete "${name}".`,
@@ -22,4 +22,4 @@ export const handleDelete = async (name: string, library: IconLibrary) => {
       showToast({ title: "Failed to delete", style: Toast.Style.Failure });
     }
   }
-};
+}

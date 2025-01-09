@@ -1,37 +1,22 @@
-import { Form, ActionPanel, Action, Toast, showToast, LocalStorage } from "@raycast/api";
-import type { IconContent } from "../types";
+import { Form, ActionPanel, Action } from "@raycast/api";
+import type { IconLibrary, SvgFormValues } from "../types";
+import addSvg from "../utils/addSvg";
+import { Dispatch, SetStateAction } from "react";
 
-export default function AddSvgForm() {
-  const handleSubmit = async (values: { name: string; content: string; keywords: string }) => {
-    if (!values.name || !values.content) {
-      showToast({ title: "Name and SVG content are required", style: Toast.Style.Failure });
-      return;
-    }
+type Props = {
+  library: IconLibrary;
+  setLibrary: Dispatch<SetStateAction<IconLibrary>>;
+};
 
-    const iconContent: IconContent = {
-      content: values.content.trim(),
-      keywords: values.keywords
-        .split(",")
-        .map((keyword) => keyword.trim())
-        .filter(Boolean), // Remove empty keywords
-    };
-
-    // todo: unique constraint
-    // todo: zod parse
-    // todo: 'added successfullt' message
-    // todo: go back to home page
-    const currentLibrary = await LocalStorage.getItem<string>("iconLibrary");
-    const updatedLibrary = currentLibrary
-      ? { ...JSON.parse(currentLibrary), [values.name.trim()]: iconContent }
-      : { [values.name.trim()]: iconContent };
-
-    await LocalStorage.setItem("iconLibrary", JSON.stringify(updatedLibrary));
-  };
+export default function AddSvgForm({ library, setLibrary }: Props) {
   return (
     <Form
       actions={
         <ActionPanel>
-          <Action.SubmitForm title="Add SVG" onSubmit={handleSubmit} />
+          <Action.SubmitForm
+            title="Add SVG"
+            onSubmit={(formValues: SvgFormValues) => addSvg(formValues, library, setLibrary)}
+          />
         </ActionPanel>
       }
     >

@@ -1,7 +1,13 @@
 import { Alert, confirmAlert, LocalStorage, showToast, Toast } from "@raycast/api";
 import { IconLibrary } from "../types";
+import { Dispatch, SetStateAction } from "react";
 
-export default async function handleDelete(name: string, library: IconLibrary) {
+export default async function deleteSvg(
+  name: string,
+  library: IconLibrary,
+  setLibrary: Dispatch<SetStateAction<IconLibrary>>,
+) {
+  // todo: add hotkey
   const confirmed = await confirmAlert({
     title: "Are you sure?",
     message: `This will permanently delete "${name}".`,
@@ -16,6 +22,7 @@ export default async function handleDelete(name: string, library: IconLibrary) {
       const updatedLibrary = { ...library };
       delete updatedLibrary[name];
       await LocalStorage.setItem("iconLibrary", JSON.stringify(updatedLibrary));
+      setLibrary(updatedLibrary);
       showToast({ title: "Deleted successfully", style: Toast.Style.Success });
     } catch (error) {
       console.error("Error deleting item:", error);

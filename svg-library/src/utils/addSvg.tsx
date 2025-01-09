@@ -13,6 +13,7 @@ export default async function addSvg(
   pop: () => void,
 ) {
   // todo: dynamic import of parse?
+  // todo: add hotkey for adding
   const parsedValues = svgFormSchema.safeParse(formValues);
   if (!parsedValues.success) {
     const errorMessage = parsedValues.error.errors[0]?.message || "Invalid input";

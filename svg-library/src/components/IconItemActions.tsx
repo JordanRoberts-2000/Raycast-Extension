@@ -5,6 +5,7 @@ import type { IconContent, IconLibrary } from "../types";
 import deleteSvg from "../utils/deleteSvg";
 import { Dispatch, SetStateAction, useState } from "react";
 import { addSvgHotkey, deleteSvgHotkey, editSvgHotkey } from "../constants";
+import { copyJsx } from "../utils/convertToJsx";
 
 type props = IconContent & {
   name: string;
@@ -16,10 +17,10 @@ const IconItemActions = ({ name, content, keywords, svgLibrary, setSvgLibrary }:
   return (
     <ActionPanel>
       <ActionPanel.Section>
-        <Action title="Dynamic copy" onAction={() => console.log("hmm")} />
+        <Action title="Copy Html" onAction={() => console.log("hmm")} />
         <ActionPanel.Submenu title="Copy to clipboard" icon={Icon.Clipboard}>
-          <Action title="Copy Html" onAction={() => console.log("Add bug label")} />
-          <Action title="Copy Jsx" onAction={() => console.log("Add bug label")} />
+          <Action.CopyToClipboard title="Copy Html" content={content} />
+          <Action icon={Icon.Clipboard} title="Copy Jsx" onAction={() => copyJsx(content)} />
           <Action title="Copy File" onAction={() => console.log("Add bug label")} />
           <Action title="Copy Png" onAction={() => console.log("Add bug label")} />
         </ActionPanel.Submenu>

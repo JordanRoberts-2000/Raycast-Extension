@@ -16,9 +16,13 @@
     }
   ],
   "dependencies": {
+    "@babel/preset-typescript": "^7.26.0",
     "@raycast/api": "^1.88.4",
     "@raycast/utils": "^1.17.0",
-    "@svgr/core": "^8.1.0",
+    "@svgr/core": "^6.5.1",
+    "@svgr/plugin-jsx": "^6.5.1",
+    "@svgr/plugin-prettier": "^6.5.1",
+    "@svgr/plugin-svgo": "^6.5.1",
     "html-react-parser": "^5.2.2",
     "react-dom": "^18.3.1",
     "zod": "^3.24.1"
@@ -29,7 +33,7 @@
     "@types/react": "18.3.3",
     "@types/react-dom": "^18.3.5",
     "eslint": "^8.57.0",
-    "prettier": "^3.3.3",
+    "prettier": "^3.4.2",
     "typescript": "^5.4.5"
   },
   "scripts": {

@@ -13,7 +13,10 @@ export default function Command() {
             icon={icon}
             actions={
               <ActionPanel>
-                <Action.OpenInBrowser url="https://www.conventionalcommits.org/en/v1.0.0/" />
+                <Action.OpenInBrowser
+                  title="Open Specification In Browser"
+                  url="https://www.conventionalcommits.org/en/v1.0.0/"
+                />
               </ActionPanel>
             }
           />

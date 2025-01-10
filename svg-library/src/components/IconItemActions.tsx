@@ -8,6 +8,8 @@ import { addSvgHotkey, deleteSvgHotkey, editSvgHotkey } from "../constants";
 import { copyAsFile, copyAsJsx, copyAsPng } from "../utils/copyOptions";
 import DefaultAction from "./DefaultAction";
 import type { DefaultAction as DefaultActionType } from "../types";
+import { deleteLibraryData, exportLibraryData } from "../utils/manageLibraryData";
+import ImportLibraryDataForm from "./ImportLibraryDataForm";
 
 type props = IconContent & {
   defaultAction: DefaultActionType;
@@ -63,20 +65,16 @@ const IconItemActions = ({ name, content, keywords, svgLibrary, setSvgLibrary, d
         />
       </ActionPanel.Section>
       <ActionPanel.Section>
-        <Action
-          icon={Icon.NewDocument}
-          title="Export Library JSON"
-          onAction={() => deleteSvg(name, svgLibrary, setSvgLibrary)}
-        />
-        <Action
+        <Action icon={Icon.NewDocument} title="Export Library JSON" onAction={() => exportLibraryData()} />
+        <Action.Push
+          target={<ImportLibraryDataForm setSvgLibrary={setSvgLibrary} svgLibrary={svgLibrary} />}
           icon={Icon.SaveDocument}
           title="Import Library JSON"
-          onAction={() => deleteSvg(name, svgLibrary, setSvgLibrary)}
         />
         <Action
           icon={Icon.ExclamationMark}
           title="Delete All Svg's"
-          onAction={() => deleteSvg(name, svgLibrary, setSvgLibrary)}
+          onAction={() => deleteLibraryData(setSvgLibrary)}
         />
       </ActionPanel.Section>
     </ActionPanel>

@@ -1,10 +1,11 @@
-import { Grid, ActionPanel, Action, LocalStorage, List } from "@raycast/api";
+import { Grid, ActionPanel, Action, LocalStorage, List, Icon } from "@raycast/api";
 import AddSvgForm from "./components/AddSvgForm";
 import { useEffect, useState } from "react";
 import type { Storage, DefaultAction, IconLibrary } from "./types";
 import SortByDropdown from "./components/SortByDropdown";
 import IconItemActions from "./components/IconItemActions";
 import { addSvgHotkey } from "./constants";
+import ImportLibraryDataForm from "./components/ImportLibraryDataForm";
 
 export default function Command() {
   const [svgLibrary, setSvgLibrary] = useState<IconLibrary>({});
@@ -41,9 +42,15 @@ export default function Command() {
       actions={
         <ActionPanel>
           <Action.Push
+            icon={Icon.Plus}
             shortcut={addSvgHotkey}
             title="Add New SVG"
             target={<AddSvgForm library={svgLibrary} setLibrary={setSvgLibrary} />}
+          />
+          <Action.Push
+            target={<ImportLibraryDataForm setSvgLibrary={setSvgLibrary} svgLibrary={svgLibrary} />}
+            icon={Icon.SaveDocument}
+            title="Import Library JSON"
           />
         </ActionPanel>
       }

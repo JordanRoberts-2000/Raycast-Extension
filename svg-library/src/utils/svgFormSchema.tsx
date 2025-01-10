@@ -39,3 +39,17 @@ export const svgFormSchema = z.object({
   content: contentSchema,
   keywords: keywordsSchema,
 });
+
+export const libraryDataSchema = z.record(
+  z.string().trim().min(1, "Name is required"),
+  z.object({
+    content: z
+      .string()
+      .trim()
+      .min(1, "Content is required")
+      .refine((content) => content.startsWith("<svg") && content.endsWith("</svg>"), {
+        message: "Content must be a valid Svg",
+      }),
+    keywords: z.array(z.string()),
+  }),
+);

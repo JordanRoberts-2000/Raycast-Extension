@@ -34,6 +34,7 @@ export default function Command() {
   if (isLoading) return <List isLoading={true} />;
   return (
     <Grid
+      searchBarPlaceholder="Search Svg..."
       searchBarAccessory={<SortByDropdown setSortBy={setSortBy} sortBy={sortBy} />}
       columns={8}
       inset={Grid.Inset.Large}

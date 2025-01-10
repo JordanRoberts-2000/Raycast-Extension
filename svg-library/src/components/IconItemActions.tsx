@@ -27,7 +27,15 @@ const IconItemActions = ({ name, content, keywords, svgLibrary, setSvgLibrary }:
         icon={Icon.Pencil}
         shortcut={editSvgHotkey}
         title="Edit Svg"
-        target={<EditSvgForm name={name} content={content} />}
+        target={
+          <EditSvgForm
+            name={name}
+            content={content}
+            keywords={keywords}
+            library={svgLibrary}
+            setLibrary={setSvgLibrary}
+          />
+        }
       />
       <Action
         icon={Icon.Trash}

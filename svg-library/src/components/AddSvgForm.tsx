@@ -23,11 +23,7 @@ export default function AddSvgForm({ library, setLibrary }: Props) {
     >
       <Form.TextField autoFocus id="name" title="SVG Name" placeholder="Enter a unique name" />
       <Form.TextArea id="content" title="SVG Content" placeholder="<svg>...</svg>" />
-      <Form.TextField
-        id="keywords"
-        title="Keywords"
-        placeholder="Enter comma-separated keywords (e.g., icon, logo, graphic)"
-      />
+      <Form.TextField id="keywords" title="Search Keywords" placeholder="Comma-separated (e.g., auth, form, input)" />
     </Form>
   );
 }

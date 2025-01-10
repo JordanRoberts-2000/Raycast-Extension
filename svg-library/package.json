@@ -25,6 +25,7 @@
     "@svgr/plugin-svgo": "^6.5.1",
     "html-react-parser": "^5.2.2",
     "react-dom": "^18.3.1",
+    "sharp": "^0.33.5",
     "zod": "^3.24.1"
   },
   "devDependencies": {

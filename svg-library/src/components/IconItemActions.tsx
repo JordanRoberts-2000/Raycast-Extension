@@ -5,7 +5,7 @@ import type { IconContent, IconLibrary } from "../types";
 import deleteSvg from "../utils/deleteSvg";
 import { Dispatch, SetStateAction, useState } from "react";
 import { addSvgHotkey, deleteSvgHotkey, editSvgHotkey } from "../constants";
-import { copyAsFile, copyAsJsx } from "../utils/convertToJsx";
+import { copyAsFile, copyAsJsx, copyAsPng } from "../utils/convertToJsx";
 
 type props = IconContent & {
   name: string;
@@ -22,7 +22,7 @@ const IconItemActions = ({ name, content, keywords, svgLibrary, setSvgLibrary }:
           <Action.CopyToClipboard title="Copy Html" content={content} />
           <Action icon={Icon.Clipboard} title="Copy Jsx" onAction={() => copyAsJsx(content)} />
           <Action icon={Icon.Clipboard} title="Copy File" onAction={() => copyAsFile(content, name)} />
-          <Action title="Copy Png" onAction={() => console.log("Add bug label")} />
+          <Action icon={Icon.Clipboard} title="Copy Png" onAction={() => copyAsPng(content, name)} />
         </ActionPanel.Submenu>
       </ActionPanel.Section>
       <ActionPanel.Section>

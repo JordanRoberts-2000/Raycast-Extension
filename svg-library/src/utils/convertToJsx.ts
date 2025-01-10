@@ -5,6 +5,8 @@ import prettierPlugin from "@svgr/plugin-prettier";
 import { tmpdir } from "os";
 import { join } from "path";
 import { writeFile } from "fs/promises";
+import sharp from "sharp";
+import { pngSize } from "../constants";
 
 export async function copyAsJsx(content: string) {
   try {
@@ -23,11 +25,25 @@ export async function copyAsJsx(content: string) {
 }
 
 export async function copyAsFile(content: string, name: string) {
-  // todo: check name is valid to be file other wise: _icon.svg
+  const safeName = name.replace(/[^a-zA-Z0-9_\-]/g, "_") || "_icon";
   try {
-    // todo: maybe double check tmpdir takes care of itself
-    const tempFilePath = join(tmpdir(), `${name}.svg`);
+    const tempFilePath = join(tmpdir(), `${safeName}.svg`);
     await writeFile(tempFilePath, content, "utf-8");
+    await Clipboard.copy({ file: tempFilePath });
+    closeMainWindow();
+  } catch (error) {
+    showToast({ title: "Failed to parse html to file", style: Toast.Style.Failure });
+  }
+}
+
+export async function copyAsPng(content: string, name: string) {
+  const safeName = name.replace(/[^a-zA-Z0-9_\-]/g, "_") || "_icon";
+  try {
+    const tempFilePath = join(tmpdir(), `${safeName}.png`);
+    const pngBuffer = await sharp(Buffer.from(content)).resize(pngSize, pngSize).png().toBuffer();
+
+    await writeFile(tempFilePath, pngBuffer);
+
     await Clipboard.copy({ file: tempFilePath });
     closeMainWindow();
   } catch (error) {

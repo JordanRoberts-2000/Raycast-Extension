@@ -1,17 +1,17 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
-  "name": "custom-svg-library",
-  "title": "custom-svg-library",
-  "description": "",
-  "icon": "extension-icon.png",
+  "name": "svg-library",
+  "title": "Svg Library",
+  "description": "A tool for creating a collection of personal svgs for quick access",
+  "icon": "extension-icon.svg",
   "author": "jordan_roberts",
   "owner": "strawr",
   "license": "MIT",
   "commands": [
     {
       "name": "index",
-      "title": "svg-library",
-      "description": "",
+      "title": "Svg library",
+      "description": "Browse and manage your Svg collection.",
       "mode": "view"
     }
   ],

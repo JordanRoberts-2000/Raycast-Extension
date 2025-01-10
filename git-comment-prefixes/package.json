@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "github-commit-prefixes",
   "title": "GitHub Commit Prefixes",
-  "description": "A handy tool for exploring and understanding GitHub commit prefixes based on the Conventional Commits specification. Perfect for developers looking to streamline their commit messages.",
+  "description": "A tool for reminding and understanding GitHub commit prefixes based on the Conventional Commits specification. Perfect for developers looking to streamline their commit messages.",
   "icon": "extension-icon.svg",
   "author": "jordan_roberts",
   "owner": "strawr",

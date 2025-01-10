@@ -1,9 +1,9 @@
 export type Storage = {
-  sortBy?: SortBy;
+  defaultAction?: DefaultAction;
   iconLibrary?: string;
 };
 
-export type SortBy = "date" | "alphabetical" | "usage";
+export type DefaultAction = "copySvg" | "copyJsx" | "copyPng" | "copyFile" | "pasteSvg" | "pasteJsx";
 
 export type IconLibrary = Record<string, IconContent>;
 

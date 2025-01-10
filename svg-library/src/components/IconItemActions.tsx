@@ -5,19 +5,22 @@ import type { IconContent, IconLibrary } from "../types";
 import deleteSvg from "../utils/deleteSvg";
 import { Dispatch, SetStateAction, useState } from "react";
 import { addSvgHotkey, deleteSvgHotkey, editSvgHotkey } from "../constants";
-import { copyAsFile, copyAsJsx, copyAsPng } from "../utils/convertToJsx";
+import { copyAsFile, copyAsJsx, copyAsPng } from "../utils/copyOptions";
+import DefaultAction from "./DefaultAction";
+import type { DefaultAction as DefaultActionType } from "../types";
 
 type props = IconContent & {
+  defaultAction: DefaultActionType;
   name: string;
   svgLibrary: IconLibrary;
   setSvgLibrary: Dispatch<SetStateAction<IconLibrary>>;
 };
 
-const IconItemActions = ({ name, content, keywords, svgLibrary, setSvgLibrary }: props) => {
+const IconItemActions = ({ name, content, keywords, svgLibrary, setSvgLibrary, defaultAction }: props) => {
   return (
     <ActionPanel>
       <ActionPanel.Section>
-        <Action title="Copy Html" onAction={() => console.log("hmm")} />
+        <DefaultAction name={name} content={content} defaultAction={defaultAction} />
         <ActionPanel.Submenu title="Copy to clipboard" icon={Icon.Clipboard}>
           <Action.CopyToClipboard title="Copy Html" content={content} />
           <Action icon={Icon.Clipboard} title="Copy Jsx" onAction={() => copyAsJsx(content)} />
@@ -26,6 +29,12 @@ const IconItemActions = ({ name, content, keywords, svgLibrary, setSvgLibrary }:
         </ActionPanel.Submenu>
       </ActionPanel.Section>
       <ActionPanel.Section>
+        <Action.Push
+          icon={Icon.Heart}
+          shortcut={addSvgHotkey}
+          title="Add To Favourites"
+          target={<AddSvgForm library={svgLibrary} setLibrary={setSvgLibrary} />}
+        />
         <Action.Push
           icon={Icon.Plus}
           shortcut={addSvgHotkey}
@@ -54,10 +63,14 @@ const IconItemActions = ({ name, content, keywords, svgLibrary, setSvgLibrary }:
         />
       </ActionPanel.Section>
       <ActionPanel.Section>
-        <Action icon={Icon.Gear} title="Parse Settings" onAction={() => deleteSvg(name, svgLibrary, setSvgLibrary)} />
         <Action
-          icon={Icon.RotateAntiClockwise}
-          title="Reset svg usage counters"
+          icon={Icon.NewDocument}
+          title="Export Library JSON"
+          onAction={() => deleteSvg(name, svgLibrary, setSvgLibrary)}
+        />
+        <Action
+          icon={Icon.SaveDocument}
+          title="Import Library JSON"
           onAction={() => deleteSvg(name, svgLibrary, setSvgLibrary)}
         />
         <Action

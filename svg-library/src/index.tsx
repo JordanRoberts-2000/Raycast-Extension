@@ -1,22 +1,22 @@
 import { Grid, ActionPanel, Action, LocalStorage, List } from "@raycast/api";
 import AddSvgForm from "./components/AddSvgForm";
 import { useEffect, useState } from "react";
-import type { Storage, SortBy, IconLibrary } from "./types";
+import type { Storage, DefaultAction, IconLibrary } from "./types";
 import SortByDropdown from "./components/SortByDropdown";
 import IconItemActions from "./components/IconItemActions";
 import { addSvgHotkey } from "./constants";
 
 export default function Command() {
   const [svgLibrary, setSvgLibrary] = useState<IconLibrary>({});
-  const [sortBy, setSortBy] = useState<SortBy>("usage");
+  const [defaultAction, setDefaultAction] = useState<DefaultAction>("copyFile");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchSVGs = async () => {
       const library = await LocalStorage.allItems<Storage>();
 
-      if (library.sortBy) {
-        setSortBy(library.sortBy);
+      if (library.defaultAction) {
+        setDefaultAction(library.defaultAction);
       }
       if (library.iconLibrary) {
         try {
@@ -35,7 +35,7 @@ export default function Command() {
   return (
     <Grid
       searchBarPlaceholder="Search Svg..."
-      searchBarAccessory={<SortByDropdown setSortBy={setSortBy} sortBy={sortBy} />}
+      searchBarAccessory={<SortByDropdown setDefaultAction={setDefaultAction} defaultAction={defaultAction} />}
       columns={8}
       inset={Grid.Inset.Large}
       actions={
@@ -52,10 +52,11 @@ export default function Command() {
       {Object.entries(svgLibrary).map(([name, { content, keywords }]) => (
         <Grid.Item
           key={name}
-          title={name}
+          title={`♥︎ ${name.charAt(0).toUpperCase() + name.slice(1)}`}
           keywords={keywords}
           actions={
             <IconItemActions
+              defaultAction={defaultAction}
               name={name}
               content={content}
               keywords={keywords}

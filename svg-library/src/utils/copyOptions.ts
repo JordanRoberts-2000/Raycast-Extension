@@ -13,11 +13,29 @@ export async function copyAsJsx(content: string) {
     const jsxCode = await transform(content, {
       plugins: [jsxPlugin, prettierPlugin],
       prettier: true,
-      icon: false,
+      icon: true,
+      expandProps: false,
       template: ({ jsx }) => jsx as any,
     });
 
-    await Clipboard.copy(jsxCode.replace(/\{\.\.\.props\}/g, "").replace(/;\s*$/, ""));
+    await Clipboard.copy(jsxCode.replace(/;\s*$/, ""));
+    closeMainWindow();
+  } catch (error) {
+    showToast({ title: "Failed to parse html to jsx", style: Toast.Style.Failure });
+  }
+}
+
+export async function pasteAsJsx(content: string) {
+  try {
+    const jsxCode = await transform(content, {
+      plugins: [jsxPlugin, prettierPlugin],
+      prettier: true,
+      icon: true,
+      expandProps: false,
+      template: ({ jsx }) => jsx as any,
+    });
+
+    await Clipboard.paste(jsxCode.replace(/;\s*$/, ""));
     closeMainWindow();
   } catch (error) {
     showToast({ title: "Failed to parse html to jsx", style: Toast.Style.Failure });

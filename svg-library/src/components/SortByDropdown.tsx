@@ -14,9 +14,16 @@ const SortByDropdown = ({ sortBy, setSortBy }: Props) => {
   };
   return (
     <List.Dropdown tooltip="Sort By" value={sortBy} onChange={(newValue) => handleSortChange(newValue as SortBy)}>
-      <List.Dropdown.Item title="Date Added" value="date" />
-      <List.Dropdown.Item title="Alphabetical" value="alphabetical" />
-      <List.Dropdown.Item title="Most used" value="usage" />
+      <List.Dropdown.Section>
+        <List.Dropdown.Item title="Copy Html by default" value="date" />
+        <List.Dropdown.Item title="Copy Jsx by default" value="alphabetical" />
+        <List.Dropdown.Item title="Copy File by default" value="to" />
+        <List.Dropdown.Item title="Copy Png by default" value="usage" />
+      </List.Dropdown.Section>
+      <List.Dropdown.Section>
+        <List.Dropdown.Item title="Paste Html by default" value="ee" />
+        <List.Dropdown.Item title="Paste Jsx by default" value="aa" />
+      </List.Dropdown.Section>
     </List.Dropdown>
   );
 };

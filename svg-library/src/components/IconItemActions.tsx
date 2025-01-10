@@ -3,7 +3,7 @@ import AddSvgForm from "./AddSvgForm";
 import EditSvgForm from "./EditSvgForm";
 import type { IconContent, IconLibrary } from "../types";
 import deleteSvg from "../utils/deleteSvg";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { addSvgHotkey, deleteSvgHotkey, editSvgHotkey } from "../constants";
 
 type props = IconContent & {
@@ -15,44 +15,56 @@ type props = IconContent & {
 const IconItemActions = ({ name, content, keywords, svgLibrary, setSvgLibrary }: props) => {
   return (
     <ActionPanel>
-      <Action.CopyToClipboard title="Copy Svg" content={content} />
-      <Action.Paste icon={Icon.Upload} title="Paste Svg" content={content} />
-      <Action.Push
-        icon={Icon.Plus}
-        shortcut={addSvgHotkey}
-        title="Add New Svg"
-        target={<AddSvgForm library={svgLibrary} setLibrary={setSvgLibrary} />}
-      />
-      <Action.Push
-        icon={Icon.Pencil}
-        shortcut={editSvgHotkey}
-        title="Edit Svg"
-        target={
-          <EditSvgForm
-            name={name}
-            content={content}
-            keywords={keywords}
-            library={svgLibrary}
-            setLibrary={setSvgLibrary}
-          />
-        }
-      />
-      <Action
-        icon={Icon.Trash}
-        shortcut={deleteSvgHotkey}
-        title="Delete Svg"
-        onAction={() => deleteSvg(name, svgLibrary, setSvgLibrary)}
-      />
-      <Action
-        icon={Icon.RotateAntiClockwise}
-        title="Reset svg usage counters"
-        onAction={() => deleteSvg(name, svgLibrary, setSvgLibrary)}
-      />
-      <Action
-        icon={Icon.ExclamationMark}
-        title="Delete All Svg's"
-        onAction={() => deleteSvg(name, svgLibrary, setSvgLibrary)}
-      />
+      <ActionPanel.Section>
+        <Action title="Dynamic copy" onAction={() => console.log("hmm")} />
+        <ActionPanel.Submenu title="Copy to clipboard" icon={Icon.Clipboard}>
+          <Action title="Copy Html" onAction={() => console.log("Add bug label")} />
+          <Action title="Copy Jsx" onAction={() => console.log("Add bug label")} />
+          <Action title="Copy File" onAction={() => console.log("Add bug label")} />
+          <Action title="Copy Png" onAction={() => console.log("Add bug label")} />
+        </ActionPanel.Submenu>
+      </ActionPanel.Section>
+      <ActionPanel.Section>
+        <Action.Push
+          icon={Icon.Plus}
+          shortcut={addSvgHotkey}
+          title="Add New Svg"
+          target={<AddSvgForm library={svgLibrary} setLibrary={setSvgLibrary} />}
+        />
+        <Action.Push
+          icon={Icon.Pencil}
+          shortcut={editSvgHotkey}
+          title="Edit Svg"
+          target={
+            <EditSvgForm
+              name={name}
+              content={content}
+              keywords={keywords}
+              library={svgLibrary}
+              setLibrary={setSvgLibrary}
+            />
+          }
+        />
+        <Action
+          icon={Icon.Trash}
+          shortcut={deleteSvgHotkey}
+          title="Delete Svg"
+          onAction={() => deleteSvg(name, svgLibrary, setSvgLibrary)}
+        />
+      </ActionPanel.Section>
+      <ActionPanel.Section>
+        <Action icon={Icon.Gear} title="Parse Settings" onAction={() => deleteSvg(name, svgLibrary, setSvgLibrary)} />
+        <Action
+          icon={Icon.RotateAntiClockwise}
+          title="Reset svg usage counters"
+          onAction={() => deleteSvg(name, svgLibrary, setSvgLibrary)}
+        />
+        <Action
+          icon={Icon.ExclamationMark}
+          title="Delete All Svg's"
+          onAction={() => deleteSvg(name, svgLibrary, setSvgLibrary)}
+        />
+      </ActionPanel.Section>
     </ActionPanel>
   );
 };

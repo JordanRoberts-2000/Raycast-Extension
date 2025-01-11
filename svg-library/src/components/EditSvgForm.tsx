@@ -66,6 +66,7 @@ export default function EditSvgForm({ name, content, keywords, library, setLibra
     }
 
     updatedLibrary[editedName] = {
+      ...updatedLibrary[editedName],
       content: editedContent,
       keywords: editedKeywords,
     };

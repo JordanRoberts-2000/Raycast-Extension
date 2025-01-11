@@ -16,14 +16,14 @@ export default async function addSvg(
     return;
   }
 
-  const { name, content, keywords } = parsedValues.data;
+  const { name, content, keywords, isFavorited } = parsedValues.data;
 
   if (library[name]) {
     showToast({ title: "Validation Failed", message: `'${name}' already exists`, style: Toast.Style.Failure });
     return;
   }
 
-  const updatedLibrary = { ...library, [name]: { content, keywords } };
+  const updatedLibrary = { ...library, [name]: { content, keywords, isFavorited } };
 
   await LocalStorage.setItem("iconLibrary", JSON.stringify(updatedLibrary));
   setLibrary(updatedLibrary);

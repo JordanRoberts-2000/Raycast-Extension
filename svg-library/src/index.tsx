@@ -56,24 +56,30 @@ export default function Command() {
       }
     >
       <Grid.EmptyView icon={"."} />
-      {Object.entries(svgLibrary).map(([name, { content, keywords }]) => (
-        <Grid.Item
-          key={name}
-          title={`♥︎ ${name.charAt(0).toUpperCase() + name.slice(1)}`}
-          keywords={keywords}
-          actions={
-            <IconItemActions
-              defaultAction={defaultAction}
-              name={name}
-              content={content}
-              keywords={keywords}
-              svgLibrary={svgLibrary}
-              setSvgLibrary={setSvgLibrary}
-            />
-          }
-          content={{ source: `data:image/svg+xml;base64,${btoa(content)}` }}
-        />
-      ))}
+      {Object.entries(svgLibrary)
+        .sort(([_, a], [__, b]) => {
+          if (a.isFavorited === b.isFavorited) return 0;
+          return a.isFavorited ? -1 : 1;
+        })
+        .map(([name, { content, keywords, isFavorited }]) => (
+          <Grid.Item
+            key={name}
+            title={`${isFavorited ? "♥︎ " : ""}${name.charAt(0).toUpperCase() + name.slice(1)}`}
+            keywords={keywords}
+            actions={
+              <IconItemActions
+                isFavorited={isFavorited}
+                defaultAction={defaultAction}
+                name={name}
+                content={content}
+                keywords={keywords}
+                svgLibrary={svgLibrary}
+                setSvgLibrary={setSvgLibrary}
+              />
+            }
+            content={{ source: `data:image/svg+xml;base64,${btoa(content)}` }}
+          />
+        ))}
     </Grid>
   );
 }

@@ -10,10 +10,12 @@ export type IconLibrary = Record<string, IconContent>;
 export type IconContent = {
   content: string;
   keywords: string[];
+  isFavorited: boolean;
 };
 
 export type SvgFormValues = {
   name: string;
   content: string;
   keywords: string;
+  isFavorited: boolean;
 };

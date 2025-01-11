@@ -38,6 +38,7 @@ export const svgFormSchema = z.object({
   name: z.string().trim().min(1, "Name is required"),
   content: contentSchema,
   keywords: keywordsSchema,
+  isFavorited: z.boolean(),
 });
 
 export const libraryDataSchema = z.record(

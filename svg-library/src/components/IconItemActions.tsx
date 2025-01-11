@@ -10,15 +10,17 @@ import DefaultAction from "./DefaultAction";
 import type { DefaultAction as DefaultActionType } from "../types";
 import { deleteLibraryData, exportLibraryData } from "../utils/manageLibraryData";
 import ImportLibraryDataForm from "./ImportLibraryDataForm";
+import toggleFavorite from "../utils/toggleFavorite";
 
 type props = IconContent & {
+  isFavorited: boolean;
   defaultAction: DefaultActionType;
   name: string;
   svgLibrary: IconLibrary;
   setSvgLibrary: Dispatch<SetStateAction<IconLibrary>>;
 };
 
-const IconItemActions = ({ name, content, keywords, svgLibrary, setSvgLibrary, defaultAction }: props) => {
+const IconItemActions = ({ name, content, keywords, svgLibrary, setSvgLibrary, defaultAction, isFavorited }: props) => {
   return (
     <ActionPanel>
       <ActionPanel.Section>
@@ -31,11 +33,11 @@ const IconItemActions = ({ name, content, keywords, svgLibrary, setSvgLibrary, d
         </ActionPanel.Submenu>
       </ActionPanel.Section>
       <ActionPanel.Section>
-        <Action.Push
+        <Action
           icon={Icon.Heart}
           shortcut={addSvgHotkey}
-          title="Add To Favourites"
-          target={<AddSvgForm library={svgLibrary} setLibrary={setSvgLibrary} />}
+          title={isFavorited ? "Remove from Favorites" : "Add to Favourites"}
+          onAction={() => toggleFavorite(isFavorited, name, svgLibrary, setSvgLibrary)}
         />
         <Action.Push
           icon={Icon.Plus}

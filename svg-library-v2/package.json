@@ -1,31 +1,41 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
-  "name": "custom-code-library",
-  "title": "custom-code-library",
+  "name": "svg-library-v2",
+  "title": "svg-library-v2",
   "description": "",
   "icon": "extension-icon.png",
   "author": "jordan_roberts",
   "owner": "strawr",
+  "platforms": [
+    "macOS",
+    "Windows"
+  ],
   "license": "MIT",
   "commands": [
     {
-      "name": "index",
-      "title": "code-library",
+      "name": "svg-library",
+      "title": "svg-library",
       "description": "",
+      "mode": "view"
+    },
+    {
+      "name": "add-svg",
+      "title": "Add SVG",
+      "description": "Add a new SVG",
       "mode": "view"
     }
   ],
   "dependencies": {
-    "@raycast/api": "^1.88.4",
+    "@raycast/api": "^1.104.1",
     "@raycast/utils": "^1.17.0"
   },
   "devDependencies": {
-    "@raycast/eslint-config": "^1.0.11",
-    "@types/node": "20.8.10",
-    "@types/react": "18.3.3",
-    "eslint": "^8.57.0",
-    "prettier": "^3.3.3",
-    "typescript": "^5.4.5"
+    "@raycast/eslint-config": "^2.0.4",
+    "@types/node": "22.13.10",
+    "@types/react": "^19.0.10",
+    "eslint": "^9.22.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
   },
   "scripts": {
     "build": "ray build",

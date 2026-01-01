@@ -1,8 +1,14 @@
-import { List, Color } from "@raycast/api";
+import { List, Color, ActionPanel, Action } from "@raycast/api";
 
 export default function Command() {
   return (
-    <List>
+    <List
+      actions={
+        <ActionPanel>
+          <Action title={"toggle"} onAction={() => {}} />
+        </ActionPanel>
+      }
+    >
       <List.Section title="VS Code">
         <List.Item title="Hide / Show Terminal" accessories={[{ tag: { value: "⌃`", color: Color.Green } }]} />
         <List.Item title="Tailwind Fold Classes" accessories={[{ tag: { value: "⌃⌥A", color: Color.Green } }]} />
@@ -10,8 +16,16 @@ export default function Command() {
 
       <List.Section title="Vim">
         {/* Movement */}
-        <List.Item title="Move Cursor" subtitle="h j k l" />
-        <List.Item title="Jump Forward by Word" accessories={[{ tag: { value: "w", color: Color.Green } }]} />
+        <List.Item
+          title="Move Cursor"
+          keywords={["vim"]}
+          accessories={[{ tag: { value: "h j k l", color: Color.Green } }]}
+        />
+        <List.Item
+          title="Jump Forward by Word"
+          keywords={["Jump Forward by Word", "vim"]}
+          accessories={[{ tag: { value: "w", color: Color.Green } }]}
+        />
         <List.Item title="Jump to End of Word" accessories={[{ tag: { value: "e", color: Color.Green } }]} />
         <List.Item title="Jump Backward by Word" accessories={[{ tag: { value: "b", color: Color.Green } }]} />
 

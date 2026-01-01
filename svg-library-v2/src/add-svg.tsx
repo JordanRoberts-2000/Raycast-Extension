@@ -1,10 +1,6 @@
 import { List } from "@raycast/api";
+import AddSvgForm from "./components/forms/addSvgForm";
 
 export default function Command() {
-  return (
-    <List>
-      <List.Item title="add-svg" />
-      <List.Item title="world" />
-    </List>
-  );
+  return <AddSvgForm />;
 }

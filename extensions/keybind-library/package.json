@@ -28,7 +28,8 @@
   "dependencies": {
     "@raycast/api": "^1.104.1",
     "@raycast/utils": "^1.17.0",
-    "@strawr/raycast-utils": "*"
+    "@strawr/raycast-utils": "*",
+    "loglevel": "^1.9.2"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^2.0.4",

@@ -1,13 +1,22 @@
 import { Action, ActionPanel, Form } from "@raycast/api";
+import { usePromise } from "@raycast/utils";
 import { copyToClipboard } from "@strawr/raycast-utils";
 import { MODIFIER_SYMBOLS } from "./constants";
+import { sectionsService } from "./services/sections.service";
+import SectionList from "./components/SectionList";
 
 export default function Command() {
+  const { data: sections = [], isLoading } = usePromise(async () => {
+    return await sectionsService.getAll();
+  }, []);
+
+  const dropdownSections = ["uncategorized", ...sections];
   return (
-     <Form
+    <Form
+      isLoading={isLoading}
       actions={
         <ActionPanel>
-            <ActionPanel.Section>
+          <ActionPanel.Section>
             <Action.SubmitForm
               title="Save Keybind"
               onSubmit={(values) => {
@@ -20,6 +29,9 @@ export default function Command() {
               <Action key={s} title={`Copy ${s}`} onAction={() => copyToClipboard(s)} />
             ))}
           </ActionPanel.Section>
+          <ActionPanel.Section>
+            <Action.Push title="Manage Sections" target={<SectionList />} />
+          </ActionPanel.Section>
         </ActionPanel>
       }
     >
@@ -28,10 +40,9 @@ export default function Command() {
       <Form.TextArea id="description" title="Description" placeholder="Optional notes or explanation" />
 
       <Form.Dropdown id="section" title="Section" defaultValue="uncategorized">
-        <Form.Dropdown.Item value="uncategorized" title="Uncategorized" />
-        <Form.Dropdown.Item value="vim" title="Vim" />
-        <Form.Dropdown.Item value="vscode" title="VS Code" />
-        <Form.Dropdown.Item value="misc" title="Misc" />
+        {dropdownSections.map((s) => (
+          <Form.Dropdown.Item key={s} value={s} title={s} />
+        ))}
       </Form.Dropdown>
 
       <Form.TextField id="keybind" title="Keybind" placeholder="⌃`" />

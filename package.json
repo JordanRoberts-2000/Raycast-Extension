@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "workspaces": [
+    "raycast-utils",
+    "extensions/*"
+  ]
+}

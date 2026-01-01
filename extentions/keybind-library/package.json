@@ -13,6 +13,12 @@
   "license": "MIT",
   "commands": [
     {
+      "name": "add-keybind",
+      "title": "add-keybind",
+      "description": "",
+      "mode": "view"
+    },
+    {
       "name": "search-keybinds",
       "title": "search-keybinds",
       "description": "",
@@ -21,7 +27,8 @@
   ],
   "dependencies": {
     "@raycast/api": "^1.104.1",
-    "@raycast/utils": "^1.17.0"
+    "@raycast/utils": "^1.17.0",
+    "@strawr/raycast-utils": "*"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^2.0.4",

@@ -2,11 +2,11 @@ import { Action, ActionPanel, confirmAlert, Icon, List } from "@raycast/api";
 import { usePromise } from "@raycast/utils";
 import { sectionsService } from "../services/sections.service";
 import { SectionForm } from "./SectionForm";
+import useSections from "../hooks/useSections";
 
 export default function SectionList() {
-  const { data: sections = [], isLoading, revalidate } = usePromise(() => sectionsService.getAll(), []);
+  const { sections = [], isLoading, revalidate } = useSections();
 
-  console.log("hello", sections);
   async function handleDelete(section: string) {
     const confirmed = await confirmAlert({
       title: "Delete Section",

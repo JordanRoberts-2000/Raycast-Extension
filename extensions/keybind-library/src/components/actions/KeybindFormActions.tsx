@@ -1,4 +1,4 @@
-import { Action, ActionPanel } from "@raycast/api";
+import { Action, ActionPanel, Icon } from "@raycast/api";
 import { MODIFIER_SYMBOLS } from "../../constants";
 import { copyToClipboard } from "@strawr/raycast-utils";
 import SectionList from "../SectionList";
@@ -13,7 +13,7 @@ export function KeybindFormActions({ onSubmit }: Props) {
     <ActionPanel>
       <ActionPanel.Section>
         <Action.SubmitForm title={"Save"} onSubmit={onSubmit} />
-        <Action.Push title="Manage Sections" target={<SectionList />} />
+        <Action.Push icon={Icon.Gear} title="Manage Sections" target={<SectionList />} />
       </ActionPanel.Section>
 
       <ActionPanel.Section title="Copy Symbols">

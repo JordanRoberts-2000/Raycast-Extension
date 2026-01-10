@@ -35,7 +35,7 @@ export function ListItemActions({ keybind: k, revalidate }: Props) {
         title="Edit Keybind"
         target={<KeybindForm onSubmit={handleSubmit} initialValues={k} />}
       />
-      <Action.Push title="Manage Sections" target={<SectionList />} />
+      <Action.Push icon={Icon.Gear} title="Manage Sections" target={<SectionList />} />
     </ActionPanel>
   );
 }

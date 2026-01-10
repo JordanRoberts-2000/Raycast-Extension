@@ -1,26 +1,11 @@
-import { Action, ActionPanel, confirmAlert, Icon, List } from "@raycast/api";
-import { usePromise } from "@raycast/utils";
-import { sectionsService } from "../services/sections.service";
-import { SectionForm } from "./SectionForm";
+import { Action, ActionPanel, Icon, List } from "@raycast/api";
+import { SectionForm } from "./forms/SectionForm";
 import useSections from "../hooks/useSections";
+import { useSectionActions } from "../hooks/useSectionsActions";
 
 export default function SectionList() {
   const { sections = [], isLoading, revalidate } = useSections();
-
-  async function handleDelete(section: string) {
-    const confirmed = await confirmAlert({
-      title: "Delete Section",
-      message: `Delete "${section}"? All keybinds will be moved to Uncategorized.`,
-      primaryAction: {
-        title: "Delete",
-      },
-    });
-
-    if (!confirmed) return;
-
-    await sectionsService.delete(section);
-    await revalidate();
-  }
+  const { createSection, updateSection, deleteSection } = useSectionActions(revalidate);
 
   return (
     <List isLoading={isLoading} searchBarPlaceholder="Search sections…">
@@ -35,14 +20,16 @@ export default function SectionList() {
                 <Action.Push
                   title="Rename Section"
                   icon={Icon.Pencil}
-                  target={<SectionForm mode="edit" section={section} onDone={revalidate} />}
+                  target={
+                    <SectionForm onSubmit={(newName) => updateSection(section, newName)} initialValue={section} />
+                  }
                 />
 
                 <Action
                   title="Delete Section"
                   icon={Icon.Trash}
                   style={Action.Style.Destructive}
-                  onAction={() => handleDelete(section)}
+                  onAction={() => deleteSection(section)}
                 />
               </ActionPanel.Section>
 
@@ -50,7 +37,7 @@ export default function SectionList() {
                 <Action.Push
                   title="Create New Section"
                   icon={Icon.Plus}
-                  target={<SectionForm mode="create" onDone={revalidate} />}
+                  target={<SectionForm onSubmit={createSection} />}
                 />
               </ActionPanel.Section>
             </ActionPanel>
@@ -64,11 +51,7 @@ export default function SectionList() {
           description="Create your first section to organize keybinds."
           actions={
             <ActionPanel>
-              <Action.Push
-                title="Create Section"
-                icon={Icon.Plus}
-                target={<SectionForm mode="create" onDone={revalidate} />}
-              />
+              <Action.Push title="Create Section" icon={Icon.Plus} target={<SectionForm onSubmit={createSection} />} />
             </ActionPanel>
           }
         />

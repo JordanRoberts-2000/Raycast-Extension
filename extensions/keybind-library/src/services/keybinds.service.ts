@@ -1,5 +1,5 @@
 import { LocalStorage } from "@raycast/api";
-import { Keybind, KeybindValues } from "../types";
+import { Keybind, KeybindInput } from "../types";
 import logger from "../lib/logger";
 import randomId from "../utils/randomId";
 
@@ -30,7 +30,7 @@ export class KeybindsService {
     await LocalStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   }
 
-  async create(input: KeybindValues): Promise<Keybind> {
+  async create(input: KeybindInput): Promise<Keybind> {
     logger.info("[keybinds.create] start", {
       title: input.title,
       section: input.section ?? "uncategorized",
@@ -72,7 +72,7 @@ export class KeybindsService {
     logger.info("[keybinds.remove] success", { id });
   }
 
-  async update(id: string, patch: Partial<KeybindValues>): Promise<Keybind> {
+  async update(id: string, patch: Partial<KeybindInput>): Promise<Keybind> {
     logger.info("[keybinds.update] start", { id });
 
     const all = await this.getAll();

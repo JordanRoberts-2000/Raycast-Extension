@@ -13,14 +13,8 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "add-keybind",
-      "title": "add-keybind",
-      "description": "",
-      "mode": "view"
-    },
-    {
-      "name": "search-keybinds",
-      "title": "search-keybinds",
+      "name": "command",
+      "title": "view-keybinds",
       "description": "",
       "mode": "view"
     }
